@@ -32,7 +32,7 @@ public class CustomListener {
     @Logged
     @SuppressWarnings("unchecked")
     public void onPostPersist(Object entity) throws Exception {
-        setTrackedFields(entity);
+        //setTrackedFields(entity); //causing a null pointer exception
         for (Method method : entity.getClass().getDeclaredMethods()) {
             if (method.isAnnotationPresent(OnCreate.class)) {                
                 List<Event<Object>> events = (List<Event<Object>>) method.invoke(entity);

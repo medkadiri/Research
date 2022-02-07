@@ -7,7 +7,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public class UntrackedFieldException extends RuntimeException {
     
-    private final String fieldName;
+    private final String fieldName = "";
 
     @Override
     public String getMessage() {

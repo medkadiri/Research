@@ -25,4 +25,20 @@ public class Event<U> {
 		this.payload = payload;
 		this.label = label;
 	}
+
+    public long getTimestamp() {
+        return this.timestamp;
+    }
+
+    public String getUsername() {
+        return this.username;
+    }
+
+    public U getPayload() {
+        return this.payload;
+    }
+
+    public String getLabel() {
+        return this.label;
+    }
 }

@@ -48,4 +48,13 @@ public class TestEntity implements Trackable {
         return events;
     }
 
+    @Override
+    public Map<String, Object> getTrackedFields() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    public void setName(String string) {
+        this.name = name;
+    }
 }
