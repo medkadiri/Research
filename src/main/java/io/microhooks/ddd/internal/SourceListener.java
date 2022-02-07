@@ -28,6 +28,8 @@ public class SourceListener {
     public void onPostPersist(Object entity) throws Exception {
         Object key = getId(entity);
         eventProducer.publish(key, entity, CREATED, getSourceName(entity));
+        System.out.println("source listener");
+        System.out.println("source entity name: " + entity.toString());
     }
 
     @PostUpdate

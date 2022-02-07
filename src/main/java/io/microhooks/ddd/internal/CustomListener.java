@@ -32,7 +32,7 @@ public class CustomListener {
     @Logged
     @SuppressWarnings("unchecked")
     public void onPostPersist(Object entity) throws Exception {
-        //setTrackedFields(entity); //causing a null pointer exception
+        setTrackedFields(entity); //causing a null pointer exception
         for (Method method : entity.getClass().getDeclaredMethods()) {
             if (method.isAnnotationPresent(OnCreate.class)) {                
                 List<Event<Object>> events = (List<Event<Object>>) method.invoke(entity);
@@ -41,6 +41,7 @@ public class CustomListener {
                 // Don't return here as we allow several methods to be annotated with OnCreate
             }
         }
+        System.out.println("custom entity name: " + entity.toString());
     }
 
     @PostUpdate
@@ -68,10 +69,12 @@ public class CustomListener {
                 List<Event<Object>> events = (List<Event<Object>>) method.invoke(entity,
                         changedTrackedFields);
                 Object key = getId(entity);
-                publish(key, events, method.getAnnotation(OnDelete.class).streams());
+                System.out.println("\n ------worked------\n");
+                publish(key, events, method.getAnnotation(OnUpdate.class).streams()); //changed it from OnDelete
                 // Don't return here as we allow several methods to be annotated with OnUpdate
             }
         }
+        System.out.println("custom entity name: " + entity.toString());
     }
 
     @PostLoad
@@ -100,9 +103,13 @@ public class CustomListener {
     }
 
     private void setTrackedFields(Object entity) throws Exception {
+        System.out.println("1");
         Field[] fields = entity.getClass().getDeclaredFields();
+        System.out.println("2");
         Trackable trackableEntity = (Trackable)entity;
+        System.out.println("3");
         Map<String, Object> trackedFields = trackableEntity.getTrackedFields();
+        System.out.println("4");
         for (Field field : fields) {
             if (field.isAnnotationPresent(Track.class)) {
                 Object fieldValue = Reflector.getFieldValue(entity, field.getName());
