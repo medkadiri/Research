@@ -42,6 +42,10 @@ dependencies {
     // https://mvnrepository.com/artifact/com.h2database/h2
     runtimeOnly 'com.h2database:h2'
 
+    // class indexing library
+    implementation('org.atteo.classindex:classindex:3.4')
+    annotationProcessor('org.atteo.classindex:classindex:3.4')
+
 
     compileOnly 'org.projectlombok:lombok:1.18.22'
 	annotationProcessor 'org.projectlombok:lombok:1.18.22'
