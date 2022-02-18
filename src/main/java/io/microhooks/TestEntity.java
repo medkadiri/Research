@@ -1,8 +1,6 @@
 package io.microhooks;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -13,8 +11,6 @@ import javax.persistence.Id;
 
 import io.microhooks.ddd.Source;
 import io.microhooks.ddd.Track;
-import io.microhooks.ddd.internal.ObjectsRegistry;
-import io.microhooks.ddd.internal.Trackable;
 import io.microhooks.ddd.OnCreate;
 import io.microhooks.ddd.OnUpdate;
 import io.microhooks.eda.Event;
@@ -23,7 +19,7 @@ import lombok.Data;
 @Entity
 @Data
 @Source
-public class TestEntity implements Trackable {
+public class TestEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -48,14 +44,6 @@ public class TestEntity implements Trackable {
         String oldName = (String) changedTrackedFieldsPreviousValues.get("name");
         events.add(new Event<>(oldName + " --> " + name, "NameChanged"));
         return events;
-    }
-
-    //need to be generated when discovering that the class is annotated with source
-    @Override
-    public Map<String, Object> getTrackedFields() {
-        Map<Long, String> keyMap = new HashMap<>();
-        keyMap.put(this.id, this.getClass().getName());
-        return ObjectsRegistry.getMap(keyMap);
     }
 
 }

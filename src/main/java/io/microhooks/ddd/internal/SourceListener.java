@@ -1,8 +1,6 @@
 package io.microhooks.ddd.internal;
 
-import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
-import java.util.Map;
 
 import javax.persistence.Id;
 import javax.persistence.PostPersist;
@@ -12,7 +10,6 @@ import javax.persistence.PostUpdate;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import io.microhooks.ddd.Source;
-import io.microhooks.ddd.Track;
 import io.microhooks.eda.EventProducer;
 import io.microhooks.util.Reflector;
 import io.microhooks.util.logging.Logged;
