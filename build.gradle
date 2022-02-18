@@ -46,6 +46,9 @@ dependencies {
     implementation('org.atteo.classindex:classindex:3.4')
     annotationProcessor('org.atteo.classindex:classindex:3.4')
 
+    //adding the javapoet library
+    compileOnly 'com.squareup:javapoet:1.13.0'
+
 
     compileOnly 'org.projectlombok:lombok:1.18.22'
 	annotationProcessor 'org.projectlombok:lombok:1.18.22'

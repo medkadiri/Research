@@ -13,6 +13,7 @@ import javax.persistence.Id;
 
 import io.microhooks.ddd.Source;
 import io.microhooks.ddd.Track;
+import io.microhooks.ddd.internal.ObjectsRegistry;
 import io.microhooks.ddd.internal.Trackable;
 import io.microhooks.ddd.OnCreate;
 import io.microhooks.ddd.OnUpdate;
@@ -31,7 +32,8 @@ public class TestEntity implements Trackable {
     @Track
     private String name;
 
-    private transient Map<String, Object> trackedFields = new HashMap<>();
+    //need to be generated when discovering that the class is annotated with source
+    //private transient Map<String, Object> trackedFields = new HashMap<>();
 
     @OnCreate(streams = "CustomStream")
     public List<Event<TestDTO>> onCreate() {
@@ -48,9 +50,12 @@ public class TestEntity implements Trackable {
         return events;
     }
 
+    //need to be generated when discovering that the class is annotated with source
     @Override
     public Map<String, Object> getTrackedFields() {
-        return trackedFields;
+        Map<Long, String> keyMap = new HashMap<>();
+        keyMap.put(this.id, this.getClass().getName());
+        return ObjectsRegistry.getMap(keyMap);
     }
 
 }

@@ -26,6 +26,13 @@ public class Test {
     @GetMapping("/hello")
     public String sayHello() {
         TestEntity entity = new TestEntity();
+        TestEntity equality = entity;
+        equality.setName("Zouine");
+        System.out.println("\n\n"+ entity.getName() +"\n\n");
+        if(equality == entity)
+            System.out.println("\n\n-------------- Compared object succ --------------------\n\n");
+        else
+        System.out.println("\n\n-------------- Compared object failed --------------------\n\n");
         entity.setName("Hi!");
         entity = repo.save(entity);
 
