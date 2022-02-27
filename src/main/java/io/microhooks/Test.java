@@ -6,6 +6,7 @@ package io.microhooks;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -46,12 +47,14 @@ public class Test {
         return "Hello!";
     }
 
-    @EventListener(streams="CustomStream", label="NameChanged")
-    public void processEvent(long key, Event<String> event) {
-        System.out.println("Received Event Key: " + key);
-        System.out.println("Received Event Timestamp: " + event.getTimestamp());
-        System.out.println("Received Event Username: " + event.getUsername());
-        System.out.println("Received Event Payload: " + event.getPayload());        
+    //@EventListener(streams="Test_io.microhooks.TestEntity", label="C")
+    @KafkaListener(topics = "Test_io.microhooks.TestEntity", groupId = "groupId")
+    public void processEvent(/*long key, Event<String> event*/ String message) {
+        // System.out.println("Received Event Key: " + key);
+        // System.out.println("Received Event Timestamp: " + event.getTimestamp());
+        // System.out.println("Received Event Username: " + event.getUsername());
+        // System.out.println("Received Event Payload: " + event.getPayload());
+        System.out.println("Received Message in group foo: " + message);
     }
     
 }

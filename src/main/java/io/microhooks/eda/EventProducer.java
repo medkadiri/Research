@@ -26,7 +26,7 @@ public abstract class EventProducer<T, U> {
         
         Event<U> event = new Event<>(payload, label);
         for (int i = 0; i < streams.length; i++) {
-            publish(key, event, appName + "#" + streams[i]);
+            publish(key, event, appName + "_" + streams[i]);
         }
     }
 

@@ -28,15 +28,7 @@ public class SourceListener {
     public void onPostPersist(Object entity) throws Exception {
         Object key = getId(entity);
         eventProducer.publish(key, entity, CREATED, getSourceName(entity));
-
-        /*scanning @Track fields
-        Map<String, Object> trackedFields = ((Trackable)entity).getTrackedFields();
-        for(Field field : entity.getClass().getDeclaredFields()){
-            if(field.isAnnotationPresent(Track.class)){
-                trackedFields.put(field.getName(), null);
-                System.out.println(field.getName());
-            }
-        }*/
+        System.out.println("---------------------------------------------" + getSourceName(entity));
 
         System.out.println("source listener");
         System.out.println("source entity name: " + entity.toString());

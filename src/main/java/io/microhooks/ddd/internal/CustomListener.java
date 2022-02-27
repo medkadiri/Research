@@ -36,7 +36,7 @@ public class CustomListener {
         Map<Long, String> keyMap = new HashMap<>();
         keyMap.put((Long) getId(entity), entity.getClass().getName());
         ObjectsRegistry.putMap(keyMap, new HashMap<String, Object>());
-        setTrackedFields(entity); // causing a null pointer exception
+        setTrackedFields(entity); // causing a null pointer exception - solved
         for (Method method : entity.getClass().getDeclaredMethods()) {
             if (method.isAnnotationPresent(OnCreate.class)) {
                 List<Event<Object>> events = (List<Event<Object>>) method.invoke(entity);
