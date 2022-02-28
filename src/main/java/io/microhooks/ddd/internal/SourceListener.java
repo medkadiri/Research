@@ -10,14 +10,16 @@ import javax.persistence.PostUpdate;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import io.microhooks.ddd.Source;
-import io.microhooks.eda.EventProducer;
+import io.microhooks.eda.Event;
+import io.microhooks.eda.providers.scs.EventProducer;
+//import io.microhooks.eda.EventProducer;
 import io.microhooks.util.Reflector;
 import io.microhooks.util.logging.Logged;
 
 public class SourceListener {
 
     @Autowired
-    private EventProducer<Object, Object> eventProducer;
+    private EventProducer<Object> eventProducer;
 
     private static final String CREATED = "C";
     private static final String UPDATED = "U";
@@ -27,7 +29,8 @@ public class SourceListener {
     @Logged
     public void onPostPersist(Object entity) throws Exception {
         Object key = getId(entity);
-        eventProducer.publish(key, entity, CREATED, getSourceName(entity));
+        Event<Object> event = new Event<>(entity, CREATED);
+        eventProducer.publish(event, getSourceName(entity));
         System.out.println("---------------------------------------------" + getSourceName(entity));
 
         System.out.println("source listener");
@@ -38,14 +41,18 @@ public class SourceListener {
     @Logged
     public void onPostUpdate(Object entity) throws Exception {
         Object key = getId(entity);
-        eventProducer.publish(key, entity, UPDATED, getSourceName(entity));
+        Event<Object> event = new Event<>(entity, CREATED);
+        eventProducer.publish(event, getSourceName(entity));
+        //eventProducer.publish(key, entity, UPDATED, getSourceName(entity));
     }
 
     @PostRemove
     @Logged
     public void onPostRemove(Object entity) throws Exception {
         Object key = getId(entity);
-        eventProducer.publish(key, null, DELETED, getSourceName(entity));
+        Event<Object> event = new Event<>(entity, CREATED);
+        eventProducer.publish(event, getSourceName(entity));
+        //eventProducer.publish(key, null, DELETED, getSourceName(entity));
     }
 
     private Object getId(Object entity) throws Exception {

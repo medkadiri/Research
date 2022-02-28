@@ -116,8 +116,14 @@ public class CustomListener {
 
     private void publish(Object key, List<Event<Object>> events, String[] streams) {
         System.out.println(events);
-        events.forEach(event -> eventProducer.publish(
-                event, streams[0]));
+        System.out.println(eventProducer.getClass());
+        try {
+            //events.forEach(event -> 
+            eventProducer.publish(
+                    events.get(0), streams[0]);
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
     }
 
     /*

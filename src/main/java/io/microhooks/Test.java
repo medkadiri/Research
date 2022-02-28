@@ -48,7 +48,7 @@ public class Test {
     }
 
     //@EventListener(streams="Test_io.microhooks.TestEntity", label="C")
-    @KafkaListener(topics = "Test_io.microhooks.TestEntity", groupId = "groupId")
+    @KafkaListener(topics = "io.microhooks.TestEntity", groupId = "groupId")
     public void processEvent(/*long key, Event<String> event*/ String message) {
         // System.out.println("Received Event Key: " + key);
         // System.out.println("Received Event Timestamp: " + event.getTimestamp());
