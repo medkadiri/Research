@@ -21,13 +21,18 @@ import io.microhooks.ddd.OnDelete;
 import io.microhooks.ddd.OnUpdate;
 import io.microhooks.ddd.Track;
 import io.microhooks.eda.Event;
-import io.microhooks.eda.EventProducer;
+import io.microhooks.eda.providers.scs.EventProducer;
+//import io.microhooks.eda.EventProducer;
 import io.microhooks.util.Reflector;
 import io.microhooks.util.logging.Logged;
 
 public class CustomListener {
+
+    // @Autowired
+    // private EventProducer<Object, Object> eventProducer;
+
     @Autowired
-    private EventProducer<Object, Object> eventProducer;
+    private EventProducer<Object> eventProducer;
 
     @PostPersist
     @Logged
@@ -61,7 +66,7 @@ public class CustomListener {
         for (Method method : entity.getClass().getDeclaredMethods()) {
             if (method.isAnnotationPresent(OnUpdate.class)) {
                 Map<Long, String> keyMap = new HashMap<>();
-                keyMap.put((Long)getId(entity), entity.getClass().getName());
+                keyMap.put((Long) getId(entity), entity.getClass().getName());
                 Map<String, Object> trackedFields = ObjectsRegistry.getMap(keyMap);
                 Iterator<String> keys = trackedFields.keySet().iterator();
                 Map<String, Object> changedTrackedFields = new HashMap<>();
@@ -110,8 +115,9 @@ public class CustomListener {
     }
 
     private void publish(Object key, List<Event<Object>> events, String[] streams) {
-        events.forEach(event -> eventProducer.publish(key,
-                event.getPayload(), event.getLabel(), streams));
+        System.out.println(events);
+        events.forEach(event -> eventProducer.publish(
+                event, streams[0]));
     }
 
     /*

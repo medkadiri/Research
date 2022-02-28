@@ -39,6 +39,10 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     implementation 'org.springframework.boot:spring-boot-starter-aop:2.6.2'
 
+    // https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-stream
+    implementation 'org.springframework.cloud:spring-cloud-stream:3.2.2'
+
+
     
 
     // https://mvnrepository.com/artifact/net.bytebuddy/byte-buddy
