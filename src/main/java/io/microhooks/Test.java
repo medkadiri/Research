@@ -27,13 +27,7 @@ public class Test {
     @GetMapping("/hello")
     public String sayHello() {
         TestEntity entity = new TestEntity();
-        TestEntity equality = entity;
-        equality.setName("Zouine");
-        System.out.println("\n\n"+ entity.getName() +"\n\n");
-        if(equality == entity)
-            System.out.println("\n\n-------------- Compared object succ --------------------\n\n");
-        else
-        System.out.println("\n\n-------------- Compared object failed --------------------\n\n");
+        
         entity.setName("Hi!");
         entity = repo.save(entity);
 
@@ -54,7 +48,7 @@ public class Test {
         // System.out.println("Received Event Timestamp: " + event.getTimestamp());
         // System.out.println("Received Event Username: " + event.getUsername());
         // System.out.println("Received Event Payload: " + event.getPayload());
-        System.out.println("Received Message in group foo: " + message);
+        System.out.println("Received Message: " + message);
     }
     
 }

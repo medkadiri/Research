@@ -3,8 +3,6 @@ package io.microhooks.ddd.internal;
 import java.util.HashMap;
 import java.util.Map;
 
-//import javafx.util.Map;
-
 public class ObjectsRegistry {
 
     private static Map<Map<Long, String>, Map<String, Object>> registry = new HashMap<>();

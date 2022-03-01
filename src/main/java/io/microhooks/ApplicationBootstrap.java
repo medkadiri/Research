@@ -48,15 +48,5 @@ public class ApplicationBootstrap implements ApplicationListener<ApplicationPrep
                                         .load(klass.getClassLoader(),
                                                         ClassReloadingStrategy.fromInstalledAgent());
                 }
-                /*
-                 * new ByteBuddy()
-                 * .redefine(TestEntity.class)
-                 * .annotateType(AnnotationDescription.Builder.ofType(EntityListeners.class)
-                 * .defineTypeArray("value", SourceListener.class, CustomListener.class)
-                 * .build())
-                 * .make()
-                 * .load(TestEntity.class.getClassLoader(),
-                 * ClassReloadingStrategy.fromInstalledAgent());
-                 */
         }
 }

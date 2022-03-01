@@ -28,9 +28,6 @@ public class TestEntity {
     @Track
     private String name;
 
-    //need to be generated when discovering that the class is annotated with source
-    //private transient Map<String, Object> trackedFields = new HashMap<>();
-
     @OnCreate(streams = "CustomStream")
     public List<Event<TestDTO>> onCreate() {
         List<Event<TestDTO>> events = new ArrayList<>();
