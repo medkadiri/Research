@@ -6,11 +6,68 @@
  * User Manual available at https://docs.gradle.org/6.0/userguide/java_library_plugin.html
  */
 
+ 
+
 plugins {
     // Apply the java-library plugin to add support for Java Library
     id 'java-library'
     id 'org.springframework.boot' version '2.5.2'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'net.bytebuddy.byte-buddy-gradle-plugin' version '1.12.6'
+}
+
+import net.bytebuddy.ByteBuddy;
+import net.bytebuddy.description.type.TypeDescription
+import net.bytebuddy.dynamic.ClassFileLocator
+import net.bytebuddy.dynamic.DynamicType
+
+import java.util.Map;
+
+import java.lang.reflect.Modifier;
+
+import java.util.HashMap;
+
+public interface Trackable {
+    private transient Map<String, Object> trackedFields = new HashMap<>();
+
+    default Map<String, Object> getTrackedFields(){
+        System.out.println("Hello");
+        return trackedFields;
+    }
+}
+
+class ApplicationBootstrap implements net.bytebuddy.build.Plugin {
+
+      @Override
+    boolean matches(TypeDescription target) {
+        return true;
+    }
+
+    @Override
+    DynamicType.Builder<?> apply(DynamicType.Builder<?> builder, TypeDescription typeDescription, ClassFileLocator classFileLocator) {
+        boolean b = typeDescription.getInheritedAnnotations().toString().contains("@io.microhooks.ddd.Source");
+
+        System.out.println("Transforming " + b);
+        if(b){
+            //builder = builder.implement(Trackable.class);
+            builder.implement(Trackable.class).make();//defineField("trackedFields", Map<String, Object>, Modifier.PUBLIC | Modifier.TRANSIENT).value(new HashMap<>());
+            System.out.println("Hello " + typeDescription.getDeclaredFields());
+            return builder;//.implement(Trackable.class).defineField("trackedFields", Map<String, Object>, Modifier.PUBLIC);
+        }
+        else
+            return builder
+    }
+
+    @Override
+    void close() throws IOException {
+
+    }
+}
+
+byteBuddy {
+  transformation {
+    plugin = ApplicationBootstrap.class
+  }
 }
 
 repositories {

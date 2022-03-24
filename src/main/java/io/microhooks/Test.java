@@ -27,6 +27,9 @@ public class Test {
     @GetMapping("/hello")
     public String sayHello() {
         TestEntity entity = new TestEntity();
+        System.out.println("declared fields: " + entity.getClass().getFields());
+        System.out.println("class: " + entity.getClass().toString());
+        //System.out.println("tracked fields: " + entity.trackedFields);
         TestEntity equality = entity;
         equality.setName("Zouine");
         System.out.println("\n\n"+ entity.getName() +"\n\n");
