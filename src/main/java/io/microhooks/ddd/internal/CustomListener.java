@@ -138,14 +138,16 @@ public class CustomListener {
         System.out.println("2");
         // Trackable trackableEntity = (Trackable)entity;
         System.out.println("3");
-        Map<Long, String> keyMap = new HashMap<>();
-        keyMap.put((Long) getId(entity), entity.getClass().getName());
-        Map<String, Object> trackedFields = ObjectsRegistry.getMap(keyMap);
+        Trackable trackableEntity = (Trackable)entity;
+        Map<String, Object> keyMap = trackableEntity.getTrackedFields();
+        //new HashMap<>();
+        //keyMap.put((Long) getId(entity), entity.getClass().getName());
+        //Map<String, Object> trackedFields = ObjectsRegistry.getMap(keyMap);
         System.out.println("4");
         for (Field field : fields) {
             if (field.isAnnotationPresent(Track.class)) {
                 Object fieldValue = Reflector.getFieldValue(entity, field.getName());
-                trackedFields.put(field.getName(), fieldValue);
+                //trackedFields.put(field.getName(), fieldValue);
             }
         }
     }
